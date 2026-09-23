@@ -1,0 +1,27 @@
+/* 실제 홈페이지에서 확인한 Pretendard 폰트. 오프라인에서는 시스템 폰트 사용. */
+@import url('https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-sans text-base font-normal;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body { @apply m-0 bg-white text-foreground; }
+  #root { min-height: 100vh; }
+  button, input, select, textarea { font: inherit; letter-spacing: inherit; }
+  button:enabled, [role='button']:not([aria-disabled='true']) { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  input::placeholder, textarea::placeholder { @apply text-muted; opacity: 1; }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-primary; }
+}
+
+/* Tailwind Preflight가 box-sizing, 기본 여백, 제목, 링크, 목록, 이미지 reset을 제공합니다.
+   컴포넌트별 스타일은 해당 TSX에서 Tailwind 클래스로 작성합니다. */
