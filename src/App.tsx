@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Wrapper from './components/Wrapper'
 import AppDownloadModal from './components/AppDownloadModal'
 import HomeRecommendations from './components/HomeRecommendations'
+import TodayDealSection from "./components/TodayDealSection";
 
 export default function App() {
   const [downloadOpen, setDownloadOpen] = useState(false)
@@ -12,6 +13,7 @@ export default function App() {
         <h1 className="sr-only">오늘의집 추천 콘텐츠</h1>
         <Wrapper>
           <HomeRecommendations onOpenDownload={() => setDownloadOpen(true)} />
+          <TodayDealSection />
         </Wrapper>
       </main>
       <AppDownloadModal open={downloadOpen} onClose={() => setDownloadOpen(false)} />
