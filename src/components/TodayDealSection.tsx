@@ -30,11 +30,16 @@ export default function TodayDealSection() {
   return (
     <section className="mx-auto w-full max-w-[1200px]  py-8">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-bold leading-7 md:text-xl">
-          <a href="#" className="transition-colors hover:text-muted">오늘의딜</a>
-        </h2>
-        <a href="#" className="text-sm font-bold text-primary hover:opacity-70 md:text-base">더보기</a>
-      </div>
+  <h2 className="text-lg font-bold leading-7 md:text-xl">
+    <a href="#" className="transition-colors hover:text-muted">오늘의딜</a>
+  </h2>
+  <a href="#" className="hidden text-sm font-bold text-primary hover:opacity-70 md:block md:text-base">
+    더보기
+  </a>
+  <a href="#" aria-label="오늘의딜 더보기" className="md:hidden">
+    <img src="/images/chevron-right.svg" alt="" className="h-5 w-5" />
+  </a>
+</div>
 
       {/* 데스크톱용: 768px? 이상에서만 보임 */}
       <div className="relative hidden md:block">
@@ -80,11 +85,19 @@ export default function TodayDealSection() {
       </div>
 
       {/* 모바일용: 768px 미만에서만 보임.. */}
-      <ul className="flex flex-col gap-8 md:hidden">
-        {todayDeals.map((deal) => (
-          <DealCard key={deal.id} deal={deal} time={time} className="w-full" />
-        ))}
-      </ul>
+      <div className="md:hidden">
+  <ul>
+    {todayDeals.slice(0, 4).map((deal) => (
+      <DealCard key={deal.id} deal={deal} time={time} horizontal className="w-full" />
+    ))}
+  </ul>
+  <a
+    href="#"
+    className="mt-4 block rounded-lg border border-line py-3 text-center text-sm font-bold hover:bg-surface"
+  >
+    오늘의딜 더보기
+  </a>
+</div>
     </section>
   );
 }

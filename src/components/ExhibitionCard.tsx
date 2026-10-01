@@ -8,8 +8,8 @@ interface Props {
 export default function ExhibitionCard({ exhibition, className }: Props) {
   return (
     <li className={className}>
-      <a href="#" className="group block">
-        <div className="aspect-[3/2] overflow-hidden rounded-lg bg-gray-100">
+      <a href="#" className="group flex items-center gap-3 md:block">
+        <div className="aspect-[3/2] w-[90px] shrink-0 overflow-hidden rounded bg-gray-100 md:w-full md:rounded-lg">
           <img
             src={exhibition.imageUrl}
             alt={exhibition.title}
@@ -17,12 +17,16 @@ export default function ExhibitionCard({ exhibition, className }: Props) {
           />
         </div>
 
-        {exhibition.subtitle && (
-          <p className="mt-3 text-[15px] text-gray-600">{exhibition.subtitle}</p>
-        )}
-        <h3 className={`${exhibition.subtitle ? "mt-1" : "mt-3"} text-lg font-bold text-gray-900`}>
-          {exhibition.title}
-        </h3>
+        <div className="min-w-0 md:mt-3">
+          {exhibition.subtitle && (
+            <p className="text-xs text-gray-600 md:text-[15px]">{exhibition.subtitle}</p>
+          )}
+          <h3
+            className={`${exhibition.subtitle ? "mt-0.5 md:mt-1" : ""} text-sm font-bold text-gray-900 md:text-lg`}
+          >
+            {exhibition.title}
+          </h3>
+        </div>
       </a>
     </li>
   );
