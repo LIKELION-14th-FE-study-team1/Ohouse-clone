@@ -6,6 +6,8 @@ import TodayDealSection from "./components/TodayDealSection";
 import ReviewSection from "./components/ReviewSection";
 import ExhibitionSection from "./components/ExhibitionSection";
 
+import BestSection from './components/BestSection';
+import Footer from './components/Footer';
 
 export default function App() {
   const [downloadOpen, setDownloadOpen] = useState(false)
@@ -19,7 +21,9 @@ export default function App() {
           <TodayDealSection />
           <ReviewSection />
           <ExhibitionSection />
+          <BestSection onOpenDownload={() => setDownloadOpen(true)} />
         </Wrapper>
+        <Footer />
       </main>
       <AppDownloadModal open={downloadOpen} onClose={() => setDownloadOpen(false)} />
     </>
