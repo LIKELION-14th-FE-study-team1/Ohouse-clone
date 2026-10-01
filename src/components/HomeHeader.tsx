@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Wrapper from './Wrapper'
 import SearchField from './SearchField'
 import SearchDrawer from './SearchDrawer'
 import MobileMenuDrawer from './MobileMenuDrawer'
 import useAutoCycle from '../hooks/useAutoCycle'
 import '../styles/HomeSlide.css'
+import { keywords } from '../data/popularKeywords'
+import KeywordStatus from './KeywordStatus'
 
 type HomeHeaderProps = {
     onOpenDownload: () => void
@@ -21,49 +23,6 @@ const navigation = [
     '3D인테리어',
 ]
 
-const keywords = [
-    '밧드야',
-    '수납정리함',
-    '빌라레코드',
-    '손님용 토퍼',
-    '원하는날도착',
-    '빈티지 커튼',
-    '비스포크수납장',
-    '몰딩',
-    '작은방꾸미기',
-    '거실 수납장',
-]
-const risingRanks = [4, 5, 9]
-
-function KeywordStatus({ rank }: { rank: number }) {
-    const rising = risingRanks.includes(rank)
-    const iconUrl = `${imagePath}/${rising ? 'rising.svg' : 'new.svg'}`
-
-    return (
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center">
-            <span className="sr-only">
-                {rising ? '순위 상승' : '신규'}
-            </span>
-            <span
-                aria-hidden="true"
-                className={`block h-6 w-6 bg-[#FF5454] ${
-                    rising ? 'rotate-180' : ''
-                }`}
-                style={{
-                    maskImage: `url("${iconUrl}")`,
-                    WebkitMaskImage: `url("${iconUrl}")`,
-                    maskSize: 'contain',
-                    WebkitMaskSize: 'contain',
-                    maskRepeat: 'no-repeat',
-                    WebkitMaskRepeat: 'no-repeat',
-                    maskPosition: 'center',
-                    WebkitMaskPosition: 'center',
-                }}
-            />
-        </span>
-    )
-}
-
 export default function HomeHeader({
     onOpenDownload,
 }: HomeHeaderProps) {
@@ -74,6 +33,85 @@ export default function HomeHeader({
     const [rankingHovered, setRankingHovered] = useState(false)
     const [rankingFocused, setRankingFocused] = useState(false)
     const rankingButtonRef = useRef<HTMLButtonElement>(null)
+
+    const [hasScrolled, setHasScrolled] = useState(false)
+    const [scrollingUp, setScrollingUp] = useState(false)
+    const [headerHovered, setHeaderHovered] = useState(false)
+    const [headerKeyboardFocused, setHeaderKeyboardFocused] = useState(false)
+
+        const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 767px)')
+
+        function updateIsMobile() {
+            setIsMobile(mediaQuery.matches)
+        }
+
+        updateIsMobile()
+        mediaQuery.addEventListener('change', updateIsMobile)
+
+        return () => {
+            mediaQuery.removeEventListener('change', updateIsMobile)
+        }
+    }, [])
+
+    const mobileHeaderVisible =
+        !hasScrolled
+        || scrollingUp
+        || headerKeyboardFocused
+
+    const navigationVisible = isMobile
+        ? mobileHeaderVisible
+        : (
+            !hasScrolled
+            || scrollingUp
+            || headerHovered
+            || headerKeyboardFocused
+        )
+
+    useEffect(() => {
+        function getScrollTop() {
+            const maxScroll = Math.max(
+                0,
+                document.documentElement.scrollHeight - window.innerHeight,
+            )
+
+            return Math.min(maxScroll, Math.max(0, window.scrollY))
+        }
+
+        let previousScrollTop = getScrollTop()
+
+        setHasScrolled(previousScrollTop > 8)
+
+        function handleScroll() {
+            const currentScrollTop = getScrollTop()
+
+            setHasScrolled(currentScrollTop > 8)
+
+            if (currentScrollTop < previousScrollTop) {
+                setScrollingUp(true)
+            } else if (currentScrollTop > previousScrollTop) {
+                setScrollingUp(false)
+            }
+
+            previousScrollTop = currentScrollTop
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!navigationVisible) {
+            setRankingOpen(false)
+            setRankingHovered(false)
+            setRankingFocused(false)
+        }
+    }, [navigationVisible])
 
     function closeRanking() {
         rankingButtonRef.current?.focus()
@@ -87,7 +125,7 @@ export default function HomeHeader({
         duration,
     } = useAutoCycle(
         keywords.length,
-        2000,
+        2030,
         rankingOpen || rankingHovered || rankingFocused,
     )
 
@@ -126,10 +164,32 @@ export default function HomeHeader({
                 </div>
             )}
 
-            <header className="sticky top-0 z-40 bg-white">
-                <div className="border-b border-line">
-                    <Wrapper className="relative flex h-16 items-center justify-between gap-3 md:h-20 md:gap-5">
-                        <button
+            <header
+                aria-hidden={isMobile && !mobileHeaderVisible}
+                inert={isMobile && !mobileHeaderVisible}
+                className={`sticky top-0 z-40 isolate transition-transform duration-200 ease-out motion-reduce:transition-none ${
+                    isMobile && !mobileHeaderVisible
+                        ? '-translate-y-full'
+                        : 'translate-y-0'
+                }`}
+                onMouseEnter={() => setHeaderHovered(true)}
+                onMouseLeave={() => setHeaderHovered(false)}
+                onFocusCapture={(event) => {
+                    if (
+                        event.target instanceof HTMLElement
+                        && event.target.matches(':focus-visible')
+                    ) {
+                        setHeaderKeyboardFocused(true)
+                    }
+                }}
+                onBlurCapture={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                        setHeaderKeyboardFocused(false)
+                    }
+                }}
+            >
+                <div className="relative z-20 border-b border-line bg-white">
+                    <Wrapper className="relative flex h-[50px] items-center justify-between gap-3 md:h-20 md:gap-5">                        <button
                             type="button"
                             aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
                             aria-expanded={menuOpen}
@@ -160,7 +220,7 @@ export default function HomeHeader({
                             <img
                                 src={`${imagePath}/ohouse-horizontal.svg`}
                                 alt="오늘의집"
-                                className="h-auto w-[110px] lg:w-[130px]"
+                                className="h-[26px] w-[92px] object-contain md:h-[30px] md:w-[106px]"
                             />
                         </a>
 
@@ -199,12 +259,21 @@ export default function HomeHeader({
                                 aria-expanded={searchOpen}
                                 aria-controls={searchOpen ? 'home-search-drawer' : undefined}
                                 onClick={() => setSearchOpen(true)}
-                                className="flex h-9 w-9 items-center justify-center lg:hidden"
+                                className="flex h-9 w-9 items-center justify-center text-black transition-colors duration-150 hover:text-[#00A1FF] lg:hidden"
                             >
-                                <img
-                                    src={`${imagePath}/search-icon.svg`}
-                                    alt=""
-                                    className="h-6 w-6"
+                                <span
+                                    aria-hidden="true"
+                                    className="block h-6 w-6 bg-current"
+                                    style={{
+                                        maskImage: `url("${imagePath}/search-icon.svg")`,
+                                        WebkitMaskImage: `url("${imagePath}/search-icon.svg")`,
+                                        maskSize: 'contain',
+                                        WebkitMaskSize: 'contain',
+                                        maskRepeat: 'no-repeat',
+                                        WebkitMaskRepeat: 'no-repeat',
+                                        maskPosition: 'center',
+                                        WebkitMaskPosition: 'center',
+                                    }}
                                 />
                             </button>
 
@@ -212,12 +281,21 @@ export default function HomeHeader({
                                 type="button"
                                 onClick={onOpenDownload}
                                 aria-label="장바구니"
-                                className="flex h-9 w-9 items-center justify-center"
+                                className="flex h-9 w-9 items-center justify-center text-black transition-colors duration-150 hover:text-[#00A1FF]"
                             >
-                                <img
-                                    src={`${imagePath}/cart.svg`}
-                                    alt=""
-                                    className="h-6 w-6"
+                                <span
+                                    aria-hidden="true"
+                                    className="block h-6 w-6 bg-current"
+                                    style={{
+                                        maskImage: `url("${imagePath}/cart.svg")`,
+                                        WebkitMaskImage: `url("${imagePath}/cart.svg")`,
+                                        maskSize: 'contain',
+                                        WebkitMaskSize: 'contain',
+                                        maskRepeat: 'no-repeat',
+                                        WebkitMaskRepeat: 'no-repeat',
+                                        maskPosition: 'center',
+                                        WebkitMaskPosition: 'center',
+                                    }}
                                 />
                             </button>
 
@@ -241,24 +319,39 @@ export default function HomeHeader({
                             <button
                                 type="button"
                                 onClick={onOpenDownload}
-                                className="hidden items-center gap-2 whitespace-nowrap rounded bg-primary px-4 py-2.5 text-sm font-bold text-white hover:opacity-80 md:flex"
+                                className="group relative isolate hidden items-center gap-2 overflow-hidden whitespace-nowrap rounded bg-[#01A1FF] px-4 py-2.5 text-sm font-bold text-white md:flex"
                             >
-                                글쓰기
-                            <img
-                                src="/images/chevron-down-white.svg"
-                                alt=""
-                                className="h-3 w-3"
-                            />
+                                <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                                />
+
+                                <span className="relative">글쓰기</span>
+
+                                <img
+                                    src="/images/chevron-down-white.svg"
+                                    alt=""
+                                    className="relative hidden h-3 w-3 lg:block"
+                                />
                             </button>
                         </div>
                     </Wrapper>
                 </div>
 
-                <div className="border-b border-line">
-                    <Wrapper className="flex items-center justify-between gap-5">
+                <div
+                    aria-hidden={!navigationVisible}
+                    inert={!navigationVisible}
+                    className={`relative z-10 border-b border-line bg-white md:absolute md:inset-x-0 md:top-full md:transition-[transform,opacity] md:duration-200 md:ease-out motion-reduce:transition-none ${
+                        navigationVisible
+                            ? 'translate-y-0 opacity-100'
+                            : 'md:pointer-events-none md:-translate-y-full md:opacity-0'
+                    }`}
+                >
+                    <Wrapper className="relative flex h-[39px] items-center justify-between gap-3 md:h-[50px] md:gap-5">
                         <nav
                             aria-label="집구경 메뉴"
-                            className="min-w-0 flex-1 overflow-x-auto md:flex-initial [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"                        >
+                            className="min-w-0 flex-1 overflow-x-auto md:flex-initial [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"                        
+                        >
                             <ul className="mx-auto flex w-max items-center gap-5 md:mx-0">
                                 {navigation.map((item, itemIndex) => (
                                     <li key={item}>
@@ -270,7 +363,7 @@ export default function HomeHeader({
                                                     ? () => window.scrollTo({ top: 0 })
                                                     : onOpenDownload
                                             }
-                                            className={`h-[50px] whitespace-nowrap border-b-2 text-sm font-bold hover:text-primary md:text-base ${
+                                                className={`flex h-[39px] items-center justify-center whitespace-nowrap border-b-2 text-sm font-bold hover:text-primary md:h-[50px] md:text-base ${
                                                 itemIndex === 0
                                                     ? 'border-primary text-primary'
                                                     : 'border-transparent'
@@ -309,7 +402,7 @@ export default function HomeHeader({
                                 aria-controls="home-keyword-list"
                                 aria-label="인기 검색어 목록"
                                 onClick={() => setRankingOpen((open) => !open)}
-                                className="flex h-[50px] w-full items-center gap-2 text-sm"
+                                className="flex h-[39px] w-full items-center gap-2 text-sm md:h-[50px]"                            
                             >
                                 <span className="relative block h-6 min-w-0 flex-1 overflow-hidden">
                                     {previousIndex !== null && (
@@ -417,6 +510,8 @@ export default function HomeHeader({
                     </Wrapper>
                 </div>
             </header>
+
+            <div aria-hidden="true" className="hidden md:block md:h-[51px]" />
 
             {searchOpen && (
                 <SearchDrawer

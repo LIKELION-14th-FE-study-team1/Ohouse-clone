@@ -114,8 +114,7 @@ export default function SearchDrawer({
                 <h2 className="sr-only">통합검색</h2>
 
                 <div className="flex items-center gap-4">
-                    <div className="min-w-0 flex-1">
-                        <SearchField
+                    <div className="min-w-0 flex-1 [&>form]:h-[38px] [&>form]:py-0">                        <SearchField
                             autoFocus
                             onSearch={() => requestClose(true)}
                         />
@@ -124,8 +123,7 @@ export default function SearchDrawer({
                     <button
                         type="button"
                         onClick={() => requestClose()}
-                        className="flex h-12 shrink-0 items-center justify-center whitespace-nowrap text-base font-bold text-foreground md:hidden"
-                    >
+                        className="mr-1 flex h-[38px] shrink-0 items-center justify-center whitespace-nowrap text-base font-bold text-foreground md:hidden"                    >
                         취소
                     </button>
                 </div>

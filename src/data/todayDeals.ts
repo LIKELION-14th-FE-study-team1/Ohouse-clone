@@ -5,11 +5,11 @@ export interface Deal {
   imageUrl: string;
   discountRate: number;
   price: number;
-  hasMore?: boolean;       // "외" 있는지 없는지
+  hasMore?: boolean;
   rating: number;
   reviewCount: number;
   freeShipping: boolean;
-  badge?: string;          // "특별인증가" 같은 라벨
+  badge?: string;
   extraTag?: string;       
 }
 
