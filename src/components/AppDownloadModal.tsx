@@ -57,7 +57,7 @@ export default function AppDownloadModal({ open, onClose }: AppDownloadModalProp
           </svg>
         </button>
 
-        <img src="/images/ohouse-logo.svg" alt="오늘의집" className="mx-auto h-8 w-auto" />
+        <img src="/images/part1/ohouse-logo.svg" alt="오늘의집" className="mx-auto h-8 w-auto" />
         <h2 id={titleId} className="mx-auto mt-7 max-w-[320px] text-[22px] font-bold leading-[1.45] [word-break:keep-all]">
           오늘의 집 어플을 다운 받고 나에게 맞는 서비스를 사용해보세요!
         </h2>
