@@ -48,10 +48,6 @@ export default function App() {
                         className="-mx-4 my-6 h-3 bg-surface md:hidden"
                     />
                     <BestSection onOpenDownload={openDownload} />
-                    <div
-                        aria-hidden="true"
-                        className="-mx-4 my-6 h-3 bg-surface md:hidden"
-                    />
                     <MobilePopularKeywords onOpenDownload={openDownload} />
                 </Wrapper>
 
