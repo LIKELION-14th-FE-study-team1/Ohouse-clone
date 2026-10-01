@@ -2,9 +2,8 @@ import { useState } from "react";
 import { exhibitions } from "../data/exhibitions";
 import ExhibitionCard from "./ExhibitionCard";
 
-const VISIBLE = 4; // 한 줄에 보이는 칸 수
+const VISIBLE = 4; // 한 줄에 보이는 칸 수(특정 px 기준으로 작아지지않는이상 무조건고정)
 
-// 오늘의딜과 동일한 계산: 카드 1개 = (전체 - gap 3개) / 4
 const itemClass = "shrink-0 grow-0 basis-[calc((100%-72px)/4)] min-w-0";
 const oneStep = "((100% - 72px) / 4 + 24px)";
 
@@ -23,11 +22,13 @@ export default function ExhibitionSection() {
   return (
     <section className="mx-auto w-full max-w-[1200px] py-8">
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">오늘의 기획전</h2>
-        <a href="#" className="font-bold text-[#00a1ff]">더보기</a>
+        <h2 className="text-lg font-bold leading-7 md:text-xl">
+          <a href="#" className="transition-colors hover:text-muted">오늘의 기획전</a>
+        </h2>
+        <a href="#" className="text-sm font-bold text-primary hover:opacity-70 md:text-base">더보기</a>
       </div>
 
-      {/* 데스크톱: 760px 이상 */}
+      {/* 데스크톱: 768px 이상 */}
       <div className="relative hidden md:block">
         <div className="overflow-hidden">
           <ul
@@ -80,7 +81,7 @@ export default function ExhibitionSection() {
         </div>
       </div>
 
-      {/* 모바일: 760px 미만, 세로 일렬 */}
+      {/* 모바일: 768px 미만, 세로 일렬 */}
       <ul className="flex flex-col gap-8 md:hidden">
         {exhibitions.map((item) => (
           <ExhibitionCard key={item.id} exhibition={item} className="w-full" />
