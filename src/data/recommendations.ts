@@ -44,4 +44,6 @@ export const categories = [
   { name: '캠핑·레저', image: 'camping.avif' },
   { name: '공구·DIY', image: 'DIY.avif' },
   { name: '인테리어시공', image: 'interior.avif' },
+  { name: '렌탈·구독', image: 'subscribe.avif' },
+  { name: '장보기', image: 'grocery.avif' },
 ]
