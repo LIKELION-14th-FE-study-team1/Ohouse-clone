@@ -33,7 +33,7 @@ export default function HomeRecommendations({ onOpenDownload }: HomeRecommendati
   const { bookmarks, toggleBookmark, announcement } = useBookmarks()
 
   return (
-    <div className="space-y-12 md:space-y-16">
+    <div className="space-y-6 md:space-y-16">
       <section aria-labelledby="photos-heading">
         <SectionHeading id="photos-heading" title="이런 사진 찾고 있나요?" description="좋아하실 만한 인테리어 콘텐츠를 추천해드려요" onMore={onOpenDownload} />
         <HorizontalCarousel label="추천 사진" kind="photos">
@@ -61,6 +61,11 @@ export default function HomeRecommendations({ onOpenDownload }: HomeRecommendati
         </HorizontalCarousel>
       </section>
 
+      <div
+          aria-hidden="true"
+          className="-mx-4 h-3 bg-surface md:hidden"
+      />
+
       <section aria-labelledby="housewarming-heading">
         <SectionHeading id="housewarming-heading" title="오늘의 추천 집들이 구경해보세요 🤔" onMore={onOpenDownload} />
         <ul className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-4 md:gap-x-5">
@@ -79,6 +84,11 @@ export default function HomeRecommendations({ onOpenDownload }: HomeRecommendati
           ))}
         </ul>
       </section>
+
+      <div
+          aria-hidden="true"
+          className="-mx-4 h-3 bg-surface md:hidden"
+      />
 
       <section aria-labelledby="categories-heading">
         <SectionHeading id="categories-heading" title="카테고리별 상품 찾기" />

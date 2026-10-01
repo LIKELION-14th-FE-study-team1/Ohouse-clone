@@ -8,6 +8,7 @@ import TodayDealSection from './components/TodayDealSection'
 import ReviewSection from './components/ReviewSection'
 import ExhibitionSection from './components/ExhibitionSection'
 import BestSection from './components/BestSection'
+import MobilePopularKeywords from './components/MobilePopularKeywords'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -26,11 +27,28 @@ export default function App() {
 
                 <Wrapper>
                     <HomeIntro onOpenDownload={openDownload} />
+                    <div
+                        aria-hidden="true"
+                        className="-mx-4 my-6 h-3 bg-surface md:hidden"
+                    />
                     <HomeRecommendations onOpenDownload={openDownload} />
                     <TodayDealSection />
+                    <div
+                        aria-hidden="true"
+                        className="-mx-4 my-6 h-3 bg-surface md:hidden"
+                    />
                     <ReviewSection />
+                    <div
+                        aria-hidden="true"
+                        className="-mx-4 my-6 h-3 bg-surface md:hidden"
+                    />
                     <ExhibitionSection />
+                    <div
+                        aria-hidden="true"
+                        className="-mx-4 my-6 h-3 bg-surface md:hidden"
+                    />
                     <BestSection onOpenDownload={openDownload} />
+                    <MobilePopularKeywords onOpenDownload={openDownload} />
                 </Wrapper>
 
                 <Footer />

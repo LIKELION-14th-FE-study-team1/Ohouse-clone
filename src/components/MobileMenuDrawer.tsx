@@ -280,7 +280,7 @@ export default function MobileMenuDrawer({
                     <button
                         type="button"
                         onClick={openDownload}
-                        className="h-11 rounded-lg border border-primary text-base font-bold text-primary"
+                        className="h-11 rounded-lg border border-primary text-base font-bold text-primary transition-colors duration-150 hover:bg-[#E1F3FF]"
                     >
                         로그인
                     </button>
@@ -288,9 +288,13 @@ export default function MobileMenuDrawer({
                     <button
                         type="button"
                         onClick={openDownload}
-                        className="h-11 rounded-lg bg-primary text-base font-bold text-white"
+                        className="group relative isolate h-11 overflow-hidden rounded-lg bg-primary text-base font-bold text-white"
                     >
-                        회원가입
+                        <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                        />
+                        <span className="relative">회원가입</span>
                     </button>
                 </div>
 
