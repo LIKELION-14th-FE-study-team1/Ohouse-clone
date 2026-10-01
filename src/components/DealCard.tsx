@@ -6,14 +6,30 @@ interface Props {
   time: string;
   className?: string;
   horizontal?: boolean; // 모바일용 가로 카드
+  onOpenDownload: () => void;
 }
 
-export default function DealCard({ deal, time, className = "", horizontal = false }: Props) {
+export default function DealCard({
+  deal,
+  time,
+  className = "",
+  horizontal = false,
+  onOpenDownload,
+}: Props) {
   const [bookmarked, setBookmarked] = useState(false);
 
   return (
     <li
-      className={`${className} ${
+      role="button"
+      tabIndex={0}
+      onClick={onOpenDownload}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpenDownload();
+        }
+      }}
+      className={`cursor-pointer ${className} ${
         horizontal ? "flex items-center gap-4 border-t border-line py-4 first:border-t-0 first:pt-0" : ""
       }`}
     >
@@ -35,7 +51,10 @@ export default function DealCard({ deal, time, className = "", horizontal = fals
           type="button"
           aria-label={bookmarked ? "스크랩 취소" : "스크랩"}
           aria-pressed={bookmarked}
-          onClick={() => setBookmarked((prev) => !prev)}
+          onClick={(e) => {
+            e.stopPropagation(); // 북마크 클릭 시 모달이 같이 뜨지 않게하기..
+            setBookmarked((prev) => !prev);
+          }}
           className={`absolute ${horizontal ? "bottom-2 right-2" : "bottom-3 right-3"}`}
         >
           <img

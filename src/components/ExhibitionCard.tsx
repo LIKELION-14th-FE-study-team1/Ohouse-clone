@@ -3,12 +3,17 @@ import type { Exhibition } from "../data/exhibitions";
 interface Props {
   exhibition: Exhibition;
   className?: string;
+  onOpenDownload: () => void;
 }
 
-export default function ExhibitionCard({ exhibition, className }: Props) {
+export default function ExhibitionCard({ exhibition, className, onOpenDownload }: Props) {
   return (
     <li className={className}>
-      <a href="#" className="group flex items-center gap-3 md:block">
+      <button
+        type="button"
+        onClick={onOpenDownload}
+        className="group flex w-full items-center gap-3 text-left md:block"
+      >
         <div className="aspect-[3/2] w-[90px] shrink-0 overflow-hidden rounded bg-gray-100 md:w-full md:rounded-lg">
           <img
             src={exhibition.imageUrl}
@@ -27,7 +32,7 @@ export default function ExhibitionCard({ exhibition, className }: Props) {
             {exhibition.title}
           </h3>
         </div>
-      </a>
+      </button>
     </li>
   );
 }

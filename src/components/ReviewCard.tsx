@@ -3,13 +3,17 @@ import type { InteriorReview } from "../data/interiorReviews";
 interface Props {
   review: InteriorReview;
   className?: string;
+  onOpenDownload: () => void;
 }
 
-export default function ReviewCard({ review, className }: Props) {
+export default function ReviewCard({ review, className, onOpenDownload }: Props) {
   return (
     <li className={className}>
-      {/* 모바일: 가로(작은 이미지 + 글), 760px 이상: 세로 */}
-      <a href="#" className="group flex gap-3 md:block">
+      <button
+        type="button"
+        onClick={onOpenDownload}
+        className="group flex w-full gap-3 text-left md:block"
+      >
         <div className="h-[90px] w-[90px] shrink-0 overflow-hidden rounded bg-gray-100 md:aspect-[3/2] md:h-auto md:w-full md:rounded-lg">
           <img
             src={review.imageUrl}
@@ -24,7 +28,7 @@ export default function ReviewCard({ review, className }: Props) {
             {review.content}
           </p>
         </div>
-      </a>
+      </button>
     </li>
   );
 }
