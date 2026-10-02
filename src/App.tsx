@@ -22,7 +22,7 @@ export default function App() {
         <>
             <HomeHeader onOpenDownload={openDownload} />
 
-            <main className="min-h-screen bg-white pb-9 pt-5 md:pb-10 md:pt-8">
+            <main className="min-h-screen bg-white pt-5 md:pt-8">
                 <h1 className="sr-only">오늘의집</h1>
 
                 <Wrapper>
@@ -51,7 +51,7 @@ export default function App() {
                     <MobilePopularKeywords onOpenDownload={openDownload} />
                 </Wrapper>
 
-                <Footer />
+                <Footer onOpenDownload={openDownload} />
             </main>
 
             <AppDownloadModal

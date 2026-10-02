@@ -8,16 +8,42 @@ export interface BestProduct {
   rating: number;
   reviewCount: number;
   image: string;
-  category?: string; // 👈 카테고리 필터링용 속성
+  categories: string[];
   isPick?: boolean;
   todayDelivery?: string;
   freeShipping?: string;
-  colors?: { color: string; ring?: boolean }[];
+  isOnly?: boolean;
 }
+
+export interface BestCategory {
+  id: string;
+  label: string;
+}
+
+export const BEST_CATEGORIES: BestCategory[] = [
+  { id: '전체', label: '전체' },
+  { id: '가구', label: '가구' },
+  { id: '패브릭', label: '패브릭' },
+  { id: '가전·디지털', label: '가전·디지털' },
+  { id: '주방용품', label: '주방용품' },
+  { id: '식품', label: '식품' },
+  { id: '데코·식물', label: '데코·식물' },
+  { id: '조명', label: '조명' },
+  { id: '수납·정리', label: '수납·정리' },
+  { id: '생활용품', label: '생활용품' },
+  { id: '생필품', label: '생필품' },
+  { id: '유아·아동', label: '유아·아동' },
+  { id: '반려동물', label: '반려동물' },
+  { id: '캠핑·레저', label: '캠핑·레저' },
+  { id: '공구·DIY', label: '공구·DIY' },
+  { id: '인테리어시공', label: '인테리어시공' },
+  { id: '렌탈·구독', label: '렌탈·구독' },
+  { id: '장보기', label: '장보기' },
+];
 
 export const bestProducts: BestProduct[] = [
   // ----------------------------------------------------------------
-  // 1. 전체 / 패브릭 공통 (1번 상품)
+  // 1. 패브릭 / 가구
   // ----------------------------------------------------------------
   {
     id: 1,
@@ -26,7 +52,7 @@ export const bestProducts: BestProduct[] = [
     price: 39900,
     discountRate: 50,
     priceLabel: '특별인증가',
-    category: '패브릭',
+    categories: ['패브릭'],
     rating: 4.8,
     reviewCount: 81302,
     image: '/images/best/best-product-1.jpg',
@@ -34,10 +60,6 @@ export const bestProducts: BestProduct[] = [
     todayDelivery: '평일 13:00까지 결제시',
     freeShipping: '조건부 무료배송',
   },
-
-  // ----------------------------------------------------------------
-  // 2. 전체 / 가구 공통 (2번 상품)
-  // ----------------------------------------------------------------
   {
     id: 2,
     brand: '수면밀도',
@@ -45,17 +67,13 @@ export const bestProducts: BestProduct[] = [
     price: 299000,
     discountRate: 62,
     priceLabel: '특별인증가',
-    category: '가구',
+    categories: ['가구'],
     rating: 4.9,
     reviewCount: 22083,
     image: '/images/best/best-product-2.jpg',
     isPick: false,
     freeShipping: '무료배송',
   },
-
-  // ----------------------------------------------------------------
-  // 3. 전체 / 패브릭 공통 (3번 상품)
-  // ----------------------------------------------------------------
   {
     id: 3,
     brand: '아엠홈',
@@ -63,17 +81,13 @@ export const bestProducts: BestProduct[] = [
     price: 16800,
     discountRate: 28,
     priceLabel: '특별인증가',
-    category: '패브릭',
+    categories: ['패브릭'],
     rating: 4.8,
     reviewCount: 58055,
     image: '/images/best/best-product-3.jpg',
     isPick: false,
     freeShipping: '조건부 무료배송',
   },
-
-  // ----------------------------------------------------------------
-  // 4. 가구 전용 상품들 (가구 2, 3번)
-  // ----------------------------------------------------------------
   {
     id: 4,
     brand: '보니아가구',
@@ -81,12 +95,13 @@ export const bestProducts: BestProduct[] = [
     price: 699000,
     discountRate: 56,
     priceLabel: '특별인증가',
-    category: '가구',
+    categories: ['가구'],
     rating: 4.9,
     reviewCount: 2349,
     image: '/images/best/best-product-4.jpg',
     isPick: true,
     freeShipping: '배송비 별도',
+    isOnly: true,
   },
   {
     id: 5,
@@ -95,17 +110,14 @@ export const bestProducts: BestProduct[] = [
     price: 199000,
     discountRate: 50,
     priceLabel: '특별인증가',
-    category: '가구',
+    categories: ['가구'],
     rating: 4.9,
     reviewCount: 16504,
     image: '/images/best/best-product-5.jpg',
     isPick: true,
     freeShipping: '배송비 별도',
+    isOnly: true,
   },
-
-  // ----------------------------------------------------------------
-  // 5. 패브릭 전용 상품 (패브릭 3번)
-  // ----------------------------------------------------------------
   {
     id: 6,
     brand: '데코지오',
@@ -113,15 +125,16 @@ export const bestProducts: BestProduct[] = [
     price: 20200,
     discountRate: 49,
     priceLabel: '특별인증가',
-    category: '패브릭',
+    categories: ['패브릭'],
     rating: 4.7,
     reviewCount: 27627,
     image: '/images/best/best-product-6.jpg',
     isPick: false,
     freeShipping: '무료배송',
   },
+
   // ----------------------------------------------------------------
-  // 3. 가전·디지털
+  // 2. 가전·디지털
   // ----------------------------------------------------------------
   {
     id: 7,
@@ -130,7 +143,7 @@ export const bestProducts: BestProduct[] = [
     price: 2140004,
     discountRate: 10,
     priceLabel: '특별인증가',
-    category: '가전·디지털',
+    categories: ['가전·디지털'],
     rating: 5.0,
     reviewCount: 93,
     image: '/images/best/best-product-7.jpg',
@@ -144,7 +157,7 @@ export const bestProducts: BestProduct[] = [
     price: 2969580,
     discountRate: 38,
     priceLabel: '특별인증가',
-    category: '가전·디지털',
+    categories: ['가전·디지털'],
     rating: 4.9,
     reviewCount: 175,
     image: '/images/best/best-product-8.jpg',
@@ -157,7 +170,7 @@ export const bestProducts: BestProduct[] = [
     name: '[리퍼] Bambu Lab X2D Combo 3D 프린터',
     price: 1125000,
     discountRate: 16,
-    category: '가전·디지털',
+    categories: ['가전·디지털'],
     rating: 4.8,
     reviewCount: 39,
     image: '/images/best/best-product-9.jpg',
@@ -167,7 +180,7 @@ export const bestProducts: BestProduct[] = [
   },
 
   // ----------------------------------------------------------------
-  // 4. 주방용품
+  // 3. 주방용품
   // ----------------------------------------------------------------
   {
     id: 10,
@@ -176,7 +189,7 @@ export const bestProducts: BestProduct[] = [
     price: 59800,
     discountRate: 14,
     priceLabel: '특별인증가',
-    category: '주방용품',
+    categories: ['주방용품'],
     rating: 4.8,
     reviewCount: 18200,
     image: '/images/best/best-product-10.jpg',
@@ -191,7 +204,7 @@ export const bestProducts: BestProduct[] = [
     price: 249000,
     discountRate: 28,
     priceLabel: '특별인증가',
-    category: '주방용품',
+    categories: ['주방용품'],
     rating: 5.0,
     reviewCount: 43,
     image: '/images/best/best-product-11.jpg',
@@ -206,12 +219,529 @@ export const bestProducts: BestProduct[] = [
     price: 12900,
     discountRate: 41,
     priceLabel: '특별인증가',
-    category: '주방용품',
+    categories: ['주방용품'],
     rating: 4.8,
     reviewCount: 23773,
     image: '/images/best/best-product-12.jpg',
     isPick: false,
     todayDelivery: '평일 12:00까지 결제시',
     freeShipping: '배송비 별도',
+  },
+
+  // ----------------------------------------------------------------
+  // 4. 식품
+  // ----------------------------------------------------------------
+  {
+    id: 13,
+    brand: '늘신선',
+    name: '[햅쌀출시] 할인지원 28%쿠폰 / 26년 임실농협 행복드림 10kg 당일도정 KAFB2B',
+    price: 38800,
+    discountRate: 51,
+    priceLabel: '특별인증가',
+    categories: ['식품'],
+    rating: 4.7,
+    reviewCount: 6224,
+    image: '/images/best/best-food-1.jpg',
+    isPick: true,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 14,
+    brand: '명성쌀',
+    name: '[햅쌀출시] 26년산 당일도정 수향미 10kg / 20kg',
+    price: 45980,
+    discountRate: 48,
+    categories: ['식품'],
+    rating: 4.8,
+    reviewCount: 455,
+    image: '/images/best/best-food-2.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 15,
+    brand: '늘신선',
+    name: '[순차출고] 노르웨이 슈페리어등급 생연어 슬라이스 1kg / 500g / 300g 항공직송',
+    price: 43800,
+    discountRate: 33,
+    priceLabel: '특별인증가',
+    categories: ['식품'],
+    rating: 4.8,
+    reviewCount: 656,
+    image: '/images/best/best-food-3.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 5. 데코·식물
+  // ----------------------------------------------------------------
+  {
+    id: 16,
+    brand: '아트밀',
+    name: '[오늘의집 단독] 취향수집 아카이브 액자 스텐 자석 액자 6종 (와이드형/중형/대형)',
+    price: 34900,
+    discountRate: 32,
+    priceLabel: '특별인증가',
+    categories: ['데코·식물'],
+    rating: 4.9,
+    reviewCount: 1002,
+    image: '/images/best/best-decor-1.jpg',
+    isPick: false,
+    freeShipping: '배송비 별도',
+    isOnly: true,
+  },
+  {
+    id: 17,
+    brand: '테이스트픽',
+    name: '[오늘의집 단독] 린넨 패브릭 자석 보드 원목액자 프레임 여행 마그넷 배전함 가리개(6종)',
+    price: 54000,
+    discountRate: 11,
+    priceLabel: '특별인증가',
+    categories: ['데코·식물'],
+    rating: 4.8,
+    reviewCount: 549,
+    image: '/images/best/best-decor-2.jpg',
+    isPick: true,
+    freeShipping: '조건부 무료배송',
+    isOnly: true,
+  },
+  {
+    id: 18,
+    brand: '트웰코',
+    name: '트웰코 BQ-12A 퍼페추얼 캘린더 플립 벽시계',
+    price: 290000,
+    priceLabel: '특별인증가',
+    categories: ['데코·식물'],
+    rating: 4.7,
+    reviewCount: 1697,
+    image: '/images/best/best-decor-3.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 6. 조명
+  // ----------------------------------------------------------------
+  {
+    id: 19,
+    brand: 'F&SLIGHT',
+    name: '유로 플로어 램프 거실 침실 장스탠드 스탠딩 관절 각도조절 조명',
+    price: 169900,
+    discountRate: 49,
+    categories: ['조명'],
+    rating: 4.8,
+    reviewCount: 2770,
+    image: '/images/best/best-lighting-1.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 20,
+    brand: '로슬러',
+    name: '프라임3 R타입 실링팬 17cm 52인치, 42인치',
+    price: 349000,
+    discountRate: 10,
+    categories: ['조명'],
+    rating: 4.9,
+    reviewCount: 514,
+    image: '/images/best/best-lighting-2.jpg',
+    isPick: true,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 21,
+    brand: '홈비',
+    name: '브렐로 플로어 장스탠드 150 무드 램프',
+    price: 56500,
+    discountRate: 33,
+    categories: ['조명'],
+    rating: 4.9,
+    reviewCount: 3322,
+    image: '/images/best/best-lighting-3.jpg',
+    isPick: true,
+    freeShipping: '조건부 무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 7. 수납·정리
+  // ----------------------------------------------------------------
+  {
+    id: 22,
+    brand: '상도가구',
+    name: '몬스터랙 사이즈 맞춤제작 철제선반 조립식 앵글선반 수납선반 베란다 팬트리',
+    price: 18500,
+    discountRate: 69,
+    priceLabel: '특별인증가',
+    categories: ['수납·정리'],
+    rating: 4.7,
+    reviewCount: 21648,
+    image: '/images/best/best-storage-1.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 23,
+    brand: '상도가구',
+    name: '몬스터랙플러스 사이즈 맞춤제작 철제선반 조립식 앵글선반 수납선반 팬트리',
+    price: 22700,
+    discountRate: 66,
+    priceLabel: '특별인증가',
+    categories: ['수납·정리'],
+    rating: 4.7,
+    reviewCount: 8760,
+    image: '/images/best/best-storage-2.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 24,
+    brand: '씨데코',
+    name: '[오늘의집 단독] 라온 이동식 3단 사각 철제 빨래바구니트롤리 4color 후크 증정',
+    price: 58900,
+    discountRate: 33,
+    priceLabel: '특별인증가',
+    categories: ['수납·정리'],
+    rating: 4.9,
+    reviewCount: 5904,
+    image: '/images/best/best-storage-3.jpg',
+    isPick: false,
+    todayDelivery: '평일 13:00까지 결제시',
+    freeShipping: '배송비 별도',
+    isOnly: true,
+  },
+
+  // ----------------------------------------------------------------
+  // 8. 생활용품
+  // ----------------------------------------------------------------
+  {
+    id: 25,
+    brand: '매직캔',
+    name: '[오늘의집 단독] 오브제 올화이트 에디션 히포/오토실링 21L/ 27L 국민휴지통',
+    price: 59000,
+    discountRate: 10,
+    priceLabel: '특별인증가',
+    categories: ['생활용품'],
+    rating: 4.9,
+    reviewCount: 15099,
+    image: '/images/best/best-daily-1.jpg',
+    isPick: false,
+    todayDelivery: '평일 14:00까지 결제시',
+    freeShipping: '무료배송',
+    isOnly: true,
+  },
+
+  // ----------------------------------------------------------------
+  // 9. 통합 상품들 (여러 카테고리에 중복 노출되는 상품)
+  // ----------------------------------------------------------------
+  {
+    id: 26,
+    brand: '클라우망스탠다드',
+    name: '[오늘의집 단독] 10장 국내생산 60수 콤팩트 코마사 에코 호텔수건',
+    price: 79800,
+    discountRate: 43,
+    priceLabel: '특별인증가',
+    categories: ['생활용품', '장보기'], // 💡 중복 합침
+    rating: 4.9,
+    reviewCount: 3810,
+    image: '/images/best/best-daily-2.jpg',
+    isPick: true,
+    freeShipping: '무료배송',
+    isOnly: true,
+  },
+  {
+    id: 27,
+    brand: '코튼리빙',
+    name: '[오늘의집 단독] 10장세트 누적리뷰12만!! 40수 코마사 호텔컬렉션 200g 타월',
+    price: 34900,
+    discountRate: 56,
+    priceLabel: '특별인증가',
+    categories: ['생활용품'],
+    rating: 4.8,
+    reviewCount: 127123,
+    image: '/images/best/best-daily-3.jpg',
+    isPick: true,
+    todayDelivery: '평일 13:00까지 결제시',
+    freeShipping: '무료배송',
+    isOnly: true,
+  },
+  {
+    id: 28,
+    brand: '베베숲',
+    name: '시그니처 레드 70매 20팩(80gsm/맘가이드A등급)',
+    price: 48800,
+    categories: ['생필품', '유아·아동', '장보기'], // 💡 중복 합침
+    rating: 4.9,
+    reviewCount: 24510,
+    image: '/images/best/best-baby-1.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 29,
+    brand: '베베앙 아기물티슈',
+    name: '두꺼운 82g 골드 블랙 캡형 70매 20팩',
+    price: 41800,
+    discountRate: 47,
+    priceLabel: '특별인증가',
+    categories: ['생필품', '유아·아동'], // 💡 중복 합침
+    rating: 4.9,
+    reviewCount: 3425,
+    image: '/images/best/best-baby-2.jpg',
+    isPick: false,
+    freeShipping: '조건부 무료배송',
+  },
+  {
+    id: 30,
+    brand: '아이러브베베',
+    name: '[82평량] 시그니앙 골드퍼플 70매 20팩 캡형 아기물티슈',
+    price: 42000,
+    discountRate: 12,
+    categories: ['생필품'],
+    rating: 4.9,
+    reviewCount: 14380,
+    image: '/images/best/best-baby-3.jpg',
+    isPick: false,
+    todayDelivery: '평일 20:00까지 결제시',
+    freeShipping: '무료배송',
+  },
+  {
+    id: 31,
+    brand: '루비락',
+    name: '골든그램 2단계 800g 3통',
+    price: 135000,
+    priceLabel: '특별인증가',
+    categories: ['유아·아동', '장보기'], // 💡 중복 합침
+    rating: 5.0,
+    reviewCount: 3403,
+    image: '/images/best/best-baby-4.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 10. 반려동물
+  // ----------------------------------------------------------------
+  {
+    id: 32,
+    brand: '로하우스',
+    name: '미끄럼방지 애견매트 논슬립 펫 강아지 고양이 롤매트',
+    price: 14900,
+    discountRate: 11,
+    priceLabel: '특별인증가',
+    categories: ['반려동물'],
+    rating: 4.8,
+    reviewCount: 4867,
+    image: '/images/best/best-pet-1.jpg',
+    isPick: false,
+    todayDelivery: '평일 12:00까지 결제시',
+    freeShipping: '무료배송',
+  },
+  {
+    id: 33,
+    brand: '캐츠랑',
+    name: '비타플러스 전연령 고양이 대용량 건식사료 16kg',
+    price: 43340,
+    discountRate: 38,
+    categories: ['반려동물'],
+    rating: 4.9,
+    reviewCount: 3003,
+    image: '/images/best/best-pet-2.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 34,
+    brand: '캐츠랑',
+    name: '고양이사료 전연령용 비타플러스 20kg 점보',
+    price: 56100,
+    discountRate: 9,
+    categories: ['반려동물'],
+    rating: 5.0,
+    reviewCount: 4333,
+    image: '/images/best/best-pet-3.jpg',
+    isPick: false,
+    freeShipping: '조건부 무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 11. 캠핑·레저
+  // ----------------------------------------------------------------
+  {
+    id: 35,
+    brand: '제백',
+    name: '[오늘의집 단독] 2세대 초경량 에어리스프로 특대 풀세트 가방+핸드펌프+수리세트',
+    price: 229000,
+    discountRate: 42,
+    priceLabel: '특별인증가',
+    categories: ['캠핑·레저'],
+    rating: 4.9,
+    reviewCount: 3048,
+    image: '/images/best/best-camping-1.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+    isOnly: true,
+  },
+  {
+    id: 36,
+    brand: '제백',
+    name: '[오늘의집 단독] 에어리스퀸 40cm 더블 에어/ 캠핑에어매트 전동펌프포함',
+    price: 279000,
+    discountRate: 30,
+    priceLabel: '특별인증가',
+    categories: ['캠핑·레저'],
+    rating: 4.9,
+    reviewCount: 1192,
+    image: '/images/best/best-camping-2.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+    isOnly: true,
+  },
+  {
+    id: 37,
+    brand: '제백',
+    name: '우브 초경량 에어리스맥스 특대 풀세트 가방+핸드펌프+수리세트',
+    price: 279000,
+    discountRate: 30,
+    categories: ['캠핑·레저'],
+    rating: 4.9,
+    reviewCount: 283,
+    image: '/images/best/best-camping-3.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 12. 공구·DIY
+  // ----------------------------------------------------------------
+  {
+    id: 38,
+    brand: '주식회사 새로고침',
+    name: '신규 컬러 2종! 프리미엄 3T 데코타일 600 비접착식 1박스 1평 (14colors)',
+    price: 45900,
+    discountRate: 20,
+    priceLabel: '특별인증가',
+    categories: ['공구·DIY'],
+    rating: 4.8,
+    reviewCount: 1901,
+    image: '/images/best/best-diy-1.jpg',
+    isPick: true,
+    todayDelivery: '평일 16:00까지 결제시',
+    freeShipping: '무료배송',
+  },
+  {
+    id: 39,
+    brand: '프로메이드',
+    name: '틈없는 데크타일 샌디 9P 3colors - 백자갈 추가 가능',
+    price: 17900,
+    discountRate: 57,
+    priceLabel: '특별인증가',
+    categories: ['공구·DIY'],
+    rating: 4.9,
+    reviewCount: 6001,
+    image: '/images/best/best-diy-2.jpg',
+    isPick: false,
+    todayDelivery: '평일 15:00까지 결제시',
+    freeShipping: '무료배송',
+  },
+  {
+    id: 40,
+    brand: '도톤',
+    name: '신규컬러 1종 추가! 프리미엄 3mm 비접착식 감성 바닥 셀프 데코타일 600 3T 1평',
+    price: 46900,
+    discountRate: 22,
+    priceLabel: '특별인증가',
+    categories: ['공구·DIY'],
+    rating: 4.8,
+    reviewCount: 1953,
+    image: '/images/best/best-diy-3.jpg',
+    isPick: true,
+    todayDelivery: '평일 16:00까지 결제시',
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 13. 인테리어시공
+  // ----------------------------------------------------------------
+  {
+    id: 41,
+    brand: '솔리에',
+    name: '몰딩제거! 인기 무몰딩 붙박이장 히든도어 개별맞춤 벨루가 외 3종(전국방문실측)',
+    price: 48900,
+    discountRate: 44,
+    priceLabel: '특별인증가',
+    categories: ['인테리어시공'],
+    rating: 4.8,
+    reviewCount: 485,
+    image: '/images/best/best-interior-1.jpg',
+    isPick: false,
+    freeShipping: '조건부 무료배송',
+  },
+  {
+    id: 42,
+    brand: '솔리에',
+    name: '매트화이트 푸시풀 서랍형 붙박이장(전국방문실측)',
+    price: 54000,
+    discountRate: 13,
+    priceLabel: '특별인증가',
+    categories: ['인테리어시공'],
+    rating: 4.5,
+    reviewCount: 25,
+    image: '/images/best/best-interior-2.jpg',
+    isPick: false,
+    freeShipping: '조건부 무료배송',
+  },
+  {
+    id: 43,
+    brand: '워터클린',
+    name: '에어컨 청소 클리닝 서비스 (구매 후 예약필수 상품)',
+    price: 59900,
+    discountRate: 19,
+    categories: ['인테리어시공'],
+    rating: 4.9,
+    reviewCount: 5833,
+    image: '/images/best/best-interior-3.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+
+  // ----------------------------------------------------------------
+  // 14. 렌탈·구독
+  // ----------------------------------------------------------------
+  {
+    id: 44,
+    brand: '쿠쿠',
+    name: '[렌탈] 레스티노 안마의자 CMS-L310GG',
+    price: 0,
+    categories: ['렌탈·구독'],
+    rating: 5.0,
+    reviewCount: 12,
+    image: '/images/best/best-rental-1.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 45,
+    brand: '쿠쿠',
+    name: '[렌탈] 레스티노 리클라이너 안마의자 CMS-K310WB',
+    price: 0,
+    categories: ['렌탈·구독'],
+    rating: 5.0,
+    reviewCount: 8,
+    image: '/images/best/best-rental-2.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
+  },
+  {
+    id: 46,
+    brand: '세라젬',
+    name: '[렌탈] 파우제 M4 안마의자 마사지 휴식가전',
+    price: 0,
+    categories: ['렌탈·구독'],
+    rating: 4.9,
+    reviewCount: 45,
+    image: '/images/best/best-rental-3.jpg',
+    isPick: false,
+    freeShipping: '무료배송',
   },
 ];

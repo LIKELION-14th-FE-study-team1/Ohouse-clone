@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { bestProducts, type BestProduct } from '../data/best.ts'
-import { categories } from '../data/recommendations'
-
-const CATEGORY_TABS = ['전체', ...categories.map((c) => c.name)]
+import { BEST_CATEGORIES, bestProducts, type BestProduct } from '../data/best.ts'
 
 /* 이미지 에셋 경로 */
 const ASSET = {
@@ -11,6 +8,7 @@ const ASSET = {
   bookmarkInactive: '/images/bookmark-inactive.svg',
   shipToday: '/images/Ship-today.png',
   arrowRight: '/images/arrow-circle-right.svg',
+  chevronRight: '/images/chevron-right.svg',
 }
 
 /* 스크롤바 숨김 (가로 스크롤 영역 공통) */
@@ -22,7 +20,7 @@ interface BestSectionProps {
 }
 
 /* ------------------------------------------------------------------ */
-/* 아이콘                                                              */
+/* 아이콘                                                             */
 /* ------------------------------------------------------------------ */
 
 const StarIcon = () => (
@@ -42,7 +40,7 @@ const StarIcon = () => (
 /* 1, 2, 3 순위 북마크 모양 배지 */
 function RankBadge({ rank }: { rank: number }) {
   return (
-    <div className="pointer-events-none absolute left-3 top-0 h-[29px] w-[25px] md:left-4 md:h-[34px] md:w-[30px]">
+    <div className="pointer-events-none absolute left-3 top-0 z-20 h-[29px] w-[25px] md:left-4 md:h-[34px] md:w-[30px]">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 26 30"
@@ -64,7 +62,7 @@ function RankBadge({ rank }: { rank: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 상품 카드                                                            */
+/* 상품 카드                                                          */
 /* ------------------------------------------------------------------ */
 
 function ProductCard({
@@ -88,7 +86,7 @@ function ProductCard({
   return (
     <li className="w-full min-w-0">
       {/* 이미지 영역 */}
-      <div className="relative aspect-square overflow-hidden rounded-lg bg-surface">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-surface [container-type:inline-size]">
         <button type="button" onClick={handleClick} className="block h-full w-full text-left">
           <img
             src={product.image}
@@ -98,30 +96,23 @@ function ProductCard({
           />
         </button>
 
+        {/* 순위 뱃지 */}
         <RankBadge rank={rank} />
 
-        {/* 반응형 비율 축소 적용된 오늘의집 pick 배지 */}
+        {/* Only 검은 상자 */}
+        {product.isOnly && (
+          <div className="pointer-events-none absolute left-[3%] top-[3%] z-10 flex h-[11%] min-h-[24px] w-[26%] min-w-[64px] items-center justify-center rounded-[8px] bg-[#222831] font-bold leading-none text-white text-[clamp(11px,5.6cqw,30px)]">
+            Only
+          </div>
+        )}
+        
+        {/* 오늘의집 pick 배지 */}
         {product.isPick && (
           <img
             src={ASSET.pick}
             alt="오늘의집 pick"
             className="pointer-events-none absolute right-[5%] top-0 w-[26%]"
           />
-        )}
-
-        {/* 색상 옵션 칩 */}
-        {product.colors && (
-          <div className="pointer-events-none absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 md:bottom-3.5 md:gap-2">
-            {product.colors.map((c, i) => (
-              <span
-                key={i}
-                className={`h-3.5 w-3.5 rounded-full md:h-4 md:w-4 ${
-                  c.ring ? 'ring-1 ring-black/10' : ''
-                }`}
-                style={{ backgroundColor: c.color }}
-              />
-            ))}
-          </div>
         )}
 
         {/* 북마크(스크랩) 버튼 */}
@@ -186,21 +177,19 @@ function ProductCard({
 }
 
 /* ------------------------------------------------------------------ */
-/* BestSection                                                         */
+/* BestSection                                                        */
 /* ------------------------------------------------------------------ */
 
 export default function BestSection({ onOpenDownload }: BestSectionProps) {
-  const [activeCategory, setActiveCategory] = useState('전체')
+  const [selectedCategory, setSelectedCategory] = useState('전체')
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // 💡 [카테고리 필터링 로직]
-  // '전체'일 때는 전체 데이터를 보여주고, 그 외 카테고리 클릭 시 해당 카테고리 상품만 추출합니다.
-  const filteredProducts =
-    activeCategory === '전체'
-      ? bestProducts.slice(0, 3)
-      : bestProducts.filter((product) => product.category === activeCategory).slice(0, 3)
+  // 💡 중복 합쳐진 categories 필드에 맞춰 필터링 로직 수정
+  const filteredProducts = selectedCategory === '전체'
+    ? bestProducts
+    : bestProducts.filter((product) => product.categories.includes(selectedCategory))
 
   const updateScrollState = () => {
     const el = scrollRef.current
@@ -224,15 +213,31 @@ export default function BestSection({ onOpenDownload }: BestSectionProps) {
   }
 
   return (
-    <section className="w-full pt-6 pb-12 md:pt-10 md:pb-16">
+    <section className="w-full pb-12 pt-6 md:pb-16 md:pt-10">
       {/* 헤더 */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold leading-6 text-foreground md:text-xl md:leading-7">
+        <button
+          type="button"
+          onClick={onOpenDownload}
+          className="text-lg font-bold leading-6 text-foreground transition-colors hover:text-[#a1a1a1] md:text-xl md:leading-7"
+        >
           베스트
-        </h2>
-        <a href="/store/best" className="text-sm font-bold text-primary md:text-[15px]">
-          더보기
-        </a>
+        </button>
+        <button
+          type="button"
+          onClick={onOpenDownload}
+          aria-label="베스트 더보기"
+          className="flex items-center justify-center text-primary transition-opacity hover:opacity-60"
+        >
+          <img
+            src={ASSET.chevronRight}
+            alt="더보기"
+            className="h-5 w-5 md:hidden"
+          />
+          <span className="hidden text-[15px] font-bold leading-6 md:block md:text-base">
+            더보기
+          </span>
+        </button>
       </div>
 
       {/* 카테고리 칩 영역 */}
@@ -260,22 +265,22 @@ export default function BestSection({ onOpenDownload }: BestSectionProps) {
           role="tablist"
           aria-label="베스트 카테고리"
         >
-          {CATEGORY_TABS.map((category) => {
-            const isActive = category === activeCategory
+          {BEST_CATEGORIES.map((cat) => {
+            const isActive = cat.label === selectedCategory
             return (
               <button
-                key={category}
+                key={cat.id}
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => setSelectedCategory(cat.label)}
                 className={`h-8 shrink-0 whitespace-nowrap rounded-full px-3 text-sm transition-colors md:h-9 md:px-3.5 md:text-[15px] ${
                   isActive
                     ? 'bg-primary font-bold text-white'
                     : 'bg-surface text-foreground hover:bg-line'
                 }`}
               >
-                {category}
+                {cat.label}
               </button>
             )
           })}
@@ -297,7 +302,7 @@ export default function BestSection({ onOpenDownload }: BestSectionProps) {
         )}
       </div>
 
-      {/* 상품 리스트 (필터링된 목록 출력) */}
+      {/* 상품 리스트 */}
       <ul className="mt-4 grid grid-cols-3 gap-2 sm:gap-4 md:mt-5 md:gap-x-6 md:gap-y-8">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product, index) => (
