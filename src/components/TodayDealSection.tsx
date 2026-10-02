@@ -28,7 +28,7 @@ export default function TodayDealSection() {
   const offset = starts[page];
 
   const arrowBtn =
-    "pointer-events-auto absolute bottom-[-4px] flex h-12 w-12 items-center justify-center";
+    "pointer-events-auto absolute top-[77%] flex h-12 w-12 -translate-y-1/2 items-center justify-center transition hover:brightness-95";
 
   return (
     <section className="mx-auto w-full max-w-[1200px] py-8">
@@ -68,14 +68,14 @@ export default function TodayDealSection() {
             ))}
 
             <li className={itemClass}>
-              <div className="flex aspect-square flex-col items-center justify-center gap-3">
+              <div className="flex aspect-square flex-col items-center justify-center gap-3 pt-44">
                 <button
                   type="button"
                   onClick={onOpenDownload}
                   aria-label="더보기"
-                  className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 transition-colors hover:bg-gray-200"
                 >
-                  <svg viewBox="0 0 480 480" className="h-6 w-6" fill="#292929">
+                  <svg viewBox="0 0 480 480" className="h-5 w-5" fill="#292929">
                     <path d="M252.602 87.778c7.44-7.4 19.47-7.366 26.87.073l138 138.751.34.35c7.029 7.434 6.916 19.151-.34 26.446l-138 138.75c-7.4 7.44-19.43 7.473-26.87.074-7.44-7.4-7.473-19.43-.074-26.87L358.306 259H76c-10.493 0-19-8.507-19-19s8.507-19 19-19h282.306L252.528 114.648c-7.399-7.44-7.366-19.47.074-26.87" />
                   </svg>
                 </button>
