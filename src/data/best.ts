@@ -441,7 +441,7 @@ export const bestProducts: BestProduct[] = [
     price: 79800,
     discountRate: 43,
     priceLabel: '특별인증가',
-    categories: ['생활용품', '장보기'], // 💡 중복 합침
+    categories: ['생활용품', '장보기'],
     rating: 4.9,
     reviewCount: 3810,
     image: '/images/best/best-daily-2.jpg',
@@ -470,7 +470,7 @@ export const bestProducts: BestProduct[] = [
     brand: '베베숲',
     name: '시그니처 레드 70매 20팩(80gsm/맘가이드A등급)',
     price: 48800,
-    categories: ['생필품', '유아·아동', '장보기'], // 💡 중복 합침
+    categories: ['생필품', '유아·아동', '장보기'],
     rating: 4.9,
     reviewCount: 24510,
     image: '/images/best/best-baby-1.jpg',
@@ -511,7 +511,7 @@ export const bestProducts: BestProduct[] = [
     name: '골든그램 2단계 800g 3통',
     price: 135000,
     priceLabel: '특별인증가',
-    categories: ['유아·아동', '장보기'], // 💡 중복 합침
+    categories: ['유아·아동', '장보기'],
     rating: 5.0,
     reviewCount: 3403,
     image: '/images/best/best-baby-4.jpg',

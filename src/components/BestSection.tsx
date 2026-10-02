@@ -186,9 +186,8 @@ export default function BestSection({ onOpenDownload }: BestSectionProps) {
   const [canScrollRight, setCanScrollRight] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // 💡 중복 합쳐진 categories 필드에 맞춰 필터링 로직 수정
   const filteredProducts = selectedCategory === '전체'
-    ? bestProducts
+    ? bestProducts.slice(0, 3)
     : bestProducts.filter((product) => product.categories.includes(selectedCategory))
 
   const updateScrollState = () => {

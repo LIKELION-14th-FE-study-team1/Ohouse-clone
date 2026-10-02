@@ -30,7 +30,7 @@ export default function Footer({ onOpenDownload }: FooterProps) {
     <footer className="mt-auto bg-surface">
       <div className="mx-auto w-full max-w-content px-4 py-7 md:px-6 md:py-8 xl:px-4 xl:py-8">
         <div className="grid md:grid-cols-2 md:gap-y-6 xl:grid-cols-[320px_340px_minmax(0,1fr)] xl:gap-y-0">
-          {/* ── 1. 고객센터 ── */}
+          {/* 고객센터 */}
           <section className="pb-5 md:pb-0 md:pr-5 xl:pr-6" aria-label="고객센터">
             <button
               type="button"
@@ -69,7 +69,7 @@ export default function Footer({ onOpenDownload }: FooterProps) {
             </ul>
           </section>
 
-          {/* ── 2. 링크 목록 ── */}
+          {/* 링크 목록 */}
           <nav
             aria-label="푸터 메뉴"
             className="border-y border-line py-[26px] md:border-y-0 md:border-l md:py-0 md:pl-6 xl:px-6"
@@ -91,7 +91,7 @@ export default function Footer({ onOpenDownload }: FooterProps) {
             </ul>
           </nav>
 
-          {/* ── 3. 회사 정보 ── */}
+          {/* 회사 정보 */}
           <section
             aria-label="회사 정보"
             className="pt-[18px] md:col-span-2 md:border-t md:border-line md:pt-6 xl:col-span-1 xl:border-l xl:border-t-0 xl:pl-6 xl:pt-0"
