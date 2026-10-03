@@ -46,6 +46,9 @@ export default function HorizontalCarousel({ label, children, kind }: Horizontal
         tabIndex={0}
         className="snap-x snap-mandatory overflow-x-auto rounded [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
+        {kind === 'categories' && edges.next && (
+          <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-16 bg-gradient-to-l from-white to-transparent md:block" />
+        )}
         <ul className={kind === 'photos'
           ? 'grid auto-cols-[156px] grid-flow-col gap-3 sm:auto-cols-[calc((100%_-_40px)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_100px)/6)]'
           : 'grid auto-cols-[72px] grid-flow-col gap-3 md:auto-cols-[76px]'}>
@@ -60,7 +63,7 @@ export default function HorizontalCarousel({ label, children, kind }: Horizontal
           aria-controls={id}
           disabled={!edges[direction]}
           onClick={() => scroll(direction === 'next' ? 1 : -1)}
-          className={`absolute z-20 hidden h-12 w-12 -translate-y-1/2 rounded-full shadow-md transition-opacity hover:opacity-80 disabled:pointer-events-none disabled:opacity-0 md:block ${direction === 'next' ? '-right-6' : '-left-6'} ${kind === 'photos' ? 'top-1/2' : 'top-[42px]'}`}
+          className={`absolute z-20 hidden h-12 w-12 -translate-y-1/2 rounded-full shadow-md transition hover:brightness-95 disabled:pointer-events-none disabled:opacity-0 md:block ${direction === 'next' ? '-right-6' : '-left-6'} ${kind === 'photos' ? 'top-1/2' : 'top-[42px]'}`}
         >
           <img src={`/images/arrow-circle-${direction === 'next' ? 'right' : 'left'}.svg`} alt="" width="48" height="48" />
         </button>

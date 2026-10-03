@@ -12,9 +12,10 @@ export default function ExhibitionCard({ exhibition, className, onOpenDownload }
       <button
         type="button"
         onClick={onOpenDownload}
-        className="group flex w-full items-center gap-3 text-left md:block"
+        className="group flex w-full items-center gap-4 text-left md:block"
       >
-        <div className="aspect-[3/2] w-[90px] shrink-0 overflow-hidden rounded bg-gray-100 md:w-full md:rounded-lg">
+        {/* 이미지: 90px → 120px (3:2 비율 유지) */}
+        <div className="aspect-[3/2] w-[120px] shrink-0 overflow-hidden rounded bg-gray-100 md:w-full md:rounded-lg">
           <img
             src={exhibition.imageUrl}
             alt={exhibition.title}
@@ -24,10 +25,10 @@ export default function ExhibitionCard({ exhibition, className, onOpenDownload }
 
         <div className="min-w-0 md:mt-3">
           {exhibition.subtitle && (
-            <p className="text-xs text-gray-600 md:text-[15px]">{exhibition.subtitle}</p>
+            <p className="text-[13px] text-gray-600 md:text-[15px]">{exhibition.subtitle}</p>
           )}
           <h3
-            className={`${exhibition.subtitle ? "mt-0.5 md:mt-1" : ""} text-sm font-bold text-gray-900 md:text-lg`}
+            className={`${exhibition.subtitle ? "mt-1" : ""} text-base font-bold text-gray-900 md:mt-1 md:text-lg`}
           >
             {exhibition.title}
           </h3>

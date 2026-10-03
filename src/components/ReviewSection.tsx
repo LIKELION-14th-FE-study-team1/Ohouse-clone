@@ -8,7 +8,7 @@ export default function ReviewSection() {
   const onOpenDownload = () => setDownloadOpen(true);
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] py-8">
+    <section className="mx-auto w-full max-w-[1200px] py-2 md:py-8">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-bold leading-7 md:text-xl">
           <button type="button" onClick={onOpenDownload} className="transition-colors hover:text-muted">
@@ -27,7 +27,7 @@ export default function ReviewSection() {
         </button>
       </div>
 
-      <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
         {interiorReviews.map((review) => (
           <ReviewCard key={review.id} review={review} onOpenDownload={onOpenDownload} />
         ))}
@@ -36,7 +36,7 @@ export default function ReviewSection() {
       <button
         type="button"
         onClick={onOpenDownload}
-        className="mt-5 block w-full rounded-lg border border-line py-3 text-center text-sm font-bold hover:bg-surface md:hidden"
+        className="mt-5 block w-full rounded-lg border border-line py-3 text-center text-sm font-medium hover:bg-surface md:hidden"
       >
         인테리어 시공업체 찾기
       </button>
