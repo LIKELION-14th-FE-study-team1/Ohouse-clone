@@ -19,6 +19,8 @@ export const photos: Photo[] = [
   { id: 'photo-6', image: '/images/recommendations/photo-6.jpg', description: '종류별로 정리한 주방 수납장', author: '로이버니', avatarCrop: { x: 1207, y: 332, width: 28, height: 28 } },
   { id: 'photo-7', image: '/images/recommendations/photo-7.jpg', description: '포근한 패브릭과 조명이 있는 거실', author: 'jun.sum.home', avatar: '/images/recommendations/avatar-jun.jpg' },
   { id: 'photo-8', image: '/images/recommendations/photo-8.jpg', description: '은은한 조명으로 채운 휴식 공간', author: 'jun.sum.home', avatar: '/images/recommendations/avatar-jun.jpg' },
+  { id: 'photo-9', image: '/images/recommendations/photo-9.jpg', description: '모듬전 도라지나물 갈비찜', author: '지미니테이블', avatar: '/images/recommendations/avatar-cake.jpg' },
+  { id: 'photo-10', image: '/images/recommendations/photo-10.jpg', description: '미니멀리스트의 집', author: 'dayahome', avatar: '/images/recommendations/avatar-dog.jpg' },
 ]
 
 export const housewarmings = [
