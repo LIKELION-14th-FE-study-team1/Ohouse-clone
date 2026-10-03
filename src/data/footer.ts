@@ -85,6 +85,10 @@ export const companyInfoLines: CompanyInfoLine[] = [
       "(주)버킷플레이스",
       "대표이사 이승재",
       "서울 서초구 서초대로74길 4 삼성생명서초타워 25층, 27층",
+    ],
+  },
+  {
+    items: [
       "contact@bucketplace.net",
       "사업자등록번호 119-86-91245",
     ],
@@ -116,25 +120,25 @@ export const socialLinks: SocialLink[] = [
   {
     id: "youtube",
     label: "유튜브",
-    href: "#",
+    href: "https://www.youtube.com/channel/UCBKtitA1RwY7F32rCniV1dA",
     icon: "/images/sns-youtube.svg",
   },
   {
     id: "instagram",
     label: "인스타그램",
-    href: "#",
+    href: "https://www.instagram.com/todayhouse",
     icon: "/images/sns-instagram.svg",
   },
   {
     id: "facebook",
     label: "페이스북",
-    href: "#",
+    href: "https://www.facebook.com/interiortoday",
     icon: "/images/sns-facebook.svg",
   },
   {
     id: "naver-blog",
     label: "네이버 블로그",
-    href: "#",
+    href: "https://m.post.naver.com/",
     icon: "/images/sns-naver.svg",
   },
 ];
