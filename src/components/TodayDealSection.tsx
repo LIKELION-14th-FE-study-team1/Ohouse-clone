@@ -31,7 +31,7 @@ export default function TodayDealSection() {
     "pointer-events-auto absolute top-[77%] flex h-12 w-12 -translate-y-1/2 items-center justify-center transition hover:brightness-95";
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] py-8">
+    <section className="mx-auto w-full max-w-[1200px] py-0 md:py-8">
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-bold leading-7 md:text-xl">
           <button type="button" onClick={onOpenDownload} className="transition-colors hover:text-muted">
